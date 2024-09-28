@@ -34,6 +34,13 @@ const PORT = process.env.HOSTP;
 
 connectDB();
 
+if(process.env.NODE_ENV === "production") {
+    app.use(express.static(path.join(__dirname, '../frontend/build')));
+
+    app.get('*', (req, res)=> {
+        res.sendFile(path.resolve(__dirname, '../frontend/build', 'index.html'))
+    })
+}
 app.get('/', (req, res) => {
     res.send("Welcome to GLEE");
  });
@@ -44,13 +51,7 @@ app.use('/api/orders', orderRouter);
 
 app.use("/images", express.static('uploads'));
 
-if(process.env.NODE_ENV === "production") {
-    app.use(express.static(path.join(__dirname, '../frontend/build')));
 
-    app.get('*', (req, res)=> {
-        res.sendFile(path.resolve(__dirname, '../frontend/build', 'index.html'))
-    })
-}
 
  app.listen(PORT, () => {
     console.log(`Server listening at http://localhost:${PORT}`);
