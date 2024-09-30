@@ -8,20 +8,15 @@ import { StoreContextProvider } from './Context/StoreContext';
 import { Provider } from 'react-redux';
 import { persistor, store } from './Store/Store';
 import { PersistGate } from 'redux-persist/integration/react';
-import Loader from './Components/Loader';
-import LoaderScreen from './Components/LoaderScreen';
-import { CookiesProvider } from 'react-cookie';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <StoreContextProvider>
     <Provider store={store}>
-      <PersistGate loading={<LoaderScreen/>} persistor={persistor}>
-       <CookiesProvider>
-          <BrowserRouter>
-            <App />
-          </BrowserRouter>
-        </CookiesProvider>
+      <PersistGate loading={null} persistor={persistor}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
       </PersistGate>
     </Provider>
   </StoreContextProvider>
