@@ -3,18 +3,23 @@ import Layout from '../Components/Layout'
 import axios from 'axios';
 import { assets } from '../Components/Assets/Assets';
 import { toast } from 'react-toastify';
+import ReactLoading from 'react-loading'
 
 const Forgotpassword = () => {
     const [email, setEmail] = useState("");
+    const [loading, setLoading] = useState(false);
 
     const handleSubmit = async(e) => {
         e.preventDefault();
+        setLoading(true)
         const {data} = await axios.post('/api/user/forgot-password', {email});
         if(data.success) {
             toast.success(data.message)
             setEmail("")
+            setLoading(false)
         } else {
             toast.error('Email not valid!')
+            setLoading(false)
         }
 
     }
@@ -35,11 +40,11 @@ const Forgotpassword = () => {
                             <strong className='max-[480px]:text-[12px]'>Email</strong>
                         </label>
                         <br />
-                        <input className=' border rounded-md h-7 w-full px-2 bg-slate-100' name='Email' value={email} type='text' placeholder='input email here' id='email' onChange={(e)=> setEmail(e.target.value)} />
+                        <input className=' border rounded-md h-7 w-full px-2 bg-slate-100' name='Email' value={email} type='text' required placeholder='input email here' id='email' onChange={(e)=> setEmail(e.target.value)} />
                     </div>
                     <br />
                     <div>
-                        <button disabled={!email} className={`${!email? "bg-slate-300":"bg-slate-600"} w-full cursor-pointer  text-white rounded-md h-8`} type='submit'>Continue</button>
+                        <button disabled={!email} className={`${!email? "bg-slate-300":"bg-slate-600"} w-full cursor-pointer  text-white rounded-md h-8`} type='submit'>{loading ? <div className='w-full   flex items-center justify-center h-full'><ReactLoading type="spin" color='white' height={15} width={15}/></div> : "Continue"}</button>
                     </div>
                 </form>
                 
