@@ -60,7 +60,7 @@ const userRegisteration = async (req, res) => {
         }).save();
         const msg = `<p>Hello ${newUser.firstname}, Please verify your email address by clicking on the link below</p>
     <br>
-    <a href="${process.env.ORIGIN}/${newUser._id}/verify-email/${newUser.verificationToken}">CLICK here</a>`;
+    <a href="${process.env.ORIGIN}/verify-email/${newUser.verificationToken}">CLICK here</a>`;
     const sub = "Email Verification..";
         await sendMail(newUser.email, sub, msg)
         res.status(201).json({
