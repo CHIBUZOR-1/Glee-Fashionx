@@ -195,7 +195,7 @@ const filterProducts = async() => {
                   </div>
                     <p className='max-sm:hidden'> Results : {data.length === 0? "No Products Found": `(${data.length} products found)`}</p>
                     {
-                        loading ? <div className='w-full  flex items-center justify-center h-full'><ReactLoading type="spin" color='black' height={100} width={50}/></div> : 
+                        loading ? <div className='w-full  flex items-center justify-center h-[70vh]'><ReactLoading type="spin" color='black' height={100} width={50}/></div> : 
                         <div className='grid w-full grid-cols-4 max-md:grid-cols-3 max-sm:grid-cols-3 mt-2 mb-2 justify-center items-center gap-4'>
                             {
                                     data?.map((p, i)=> {

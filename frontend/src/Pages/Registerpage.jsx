@@ -3,6 +3,7 @@ import Layout from '../Components/Layout'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import ReactLoading from 'react-loading'
 
 const Registerpage = () => {
     const [data, setData] = useState({
@@ -13,6 +14,7 @@ const Registerpage = () => {
         password: "",
         confirmPassword: ""
     });
+    const [loading, setLoading] = useState(false);
 
     const navigate = useNavigate();
 
@@ -25,10 +27,12 @@ const Registerpage = () => {
     }
     const handleSubmit = async(e)=> {
         e.preventDefault();
+        setLoading(true)
         if(data.confirmPassword === data.password) {
             const res = await axios.post('/api/user/register', data);
             if(res.data.success) {
                 toast.success(res.data.message);
+                setLoading(false)
                 navigate('/new-user'); 
             } else {
                 toast.error("Registration failed");
@@ -96,7 +100,7 @@ const Registerpage = () => {
                         </div>
                         <br />
                         <div>
-                            <button type='submit' className=' w-full max-[460px]:text-sm bg-slate-600 text-white h-8 rounded-md'>Register</button>
+                            <button type='submit' className=' w-full active:bg-orange-300 active:text-black max-[460px]:text-sm bg-slate-600 text-white h-8 rounded-md'>{loading ? <div className='w-full   flex items-center justify-center h-full'><ReactLoading type="spin" color='white' height={15} width={15}/></div> : "Register"}</button>
                         </div>
                         <br />
                         <div>

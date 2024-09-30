@@ -66,8 +66,7 @@ const braintreePaymentController = async(req, res) => {
 
 const userOrders = async(req, res) => {
     try {
-        const orders = await orderModel.find({userId:req.user.userId});
-        console.log(req.user.userId)
+        const orders = await orderModel.find({userId:req.user.userId}).sort({createdAt: -1});
         res.json({
             success: true,
             data: orders
@@ -84,7 +83,7 @@ const userOrders = async(req, res) => {
 // Admin All orders
 const allOrders = async(req, res) => {
     try {
-        const orders = await orderModel.find({});
+        const orders = await orderModel.find({}).sort({createdAt: -1});
         res.json({
             success: true,
             data: orders

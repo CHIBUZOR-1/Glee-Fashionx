@@ -47,22 +47,22 @@ const Navbar = () => {
     {
       key: '1',
       label: user.role ? <Button onClick={logOut} className='w-full bg-slate-600 text-white font-semibold hover:bg-slate-600 hover:text-white'>Logout</Button> :
-        <Link to={'/login'}  onClick={()=> window.scrollTo(0,0)} style={{textDecoration: 'none', color: "inherit"}}>
-            <Button onClick={()=> window.scrollTo(0,0)} className=' font-semibold bg-slate-600 text-white'>Login/Signup</Button>
+        <Link to={'/login'} className='w-full'  onClick={()=> window.scrollTo(0,0)} style={{textDecoration: 'none', color: "inherit"}}>
+            <Button onClick={()=> window.scrollTo(0,0)} className='w-full font-semibold bg-slate-600 text-white'>Login/Signup</Button>
         </Link>
     },
     {
       key: '2',
       label: user.role === "ADMIN" ? 
-        <Link to="/dashboard?view=admin-profile" onClick={()=> window.scrollTo(0,0)} style={{textDecoration: 'none', color: "inherit"}}>
+        <Link to="/dashboard?view=admin-profile" onClick={()=> window.scrollTo(0,0)} className='w-full' style={{textDecoration: 'none', color: "inherit"}}>
           <Button onClick={()=> {navigate("/dashboard?view=admin-profile"); window.scrollTo(0,0)}} className=' w-full font-semibold bg-slate-600 text-white'>Admin Dashboard</Button>
         </Link>
-       : <Link to="/Customer?view=Orders" style={{textDecoration: 'none', color: "inherit"}}><Button className=' w-full font-semibold bg-slate-600 text-white'>Orders</Button></Link> 
+       : <Link to="/Customer?view=Orders" style={{textDecoration: 'none', color: "inherit"}} className='w-full'><Button className=' w-full font-semibold bg-slate-600 text-white'>Orders</Button></Link> 
     },
     {
       key: '3',
       label:  (
-        <Link className={`${user.role === "ADMIN" ? 'hidden' : 'block'}`} to="/Customer?view=my-profile" style={{textDecoration: 'none', color: "inherit"}}>
+        <Link className={`${user.role === "ADMIN" ? 'hidden' : 'block'} w-full`} to="/Customer?view=my-profile" style={{textDecoration: 'none', color: "inherit"}}>
           <Button className=' w-full font-semibold bg-slate-600 text-white'>Account</Button>
         </Link>
       ),
@@ -166,36 +166,36 @@ const Navbar = () => {
                 </form>
             </div>
             <div>
-              <Dropdown 
-              menu={{
-                items,
-              }}
-              placement="bottom"
-              >
-              <div className=' flex'>
-                  {
-                    user.role ? 
-                <div className='items-center flex gap-1 px-1 border py-1 rounded'>
-                  <Avatar size="medium" icon={<UserOutlined />} className={`bg-green-400  text-white`} />
-                  <div className='items-center text-ellipsis line-clamp-1'>{user.firstname}</div>
-                  <RiArrowDropDownLine className=' text-[30px] hover:text-blue-600' />
-                </div>  : 
-                <>
-                  <Avatar size="large" icon={<UserOutlined />} />
-                  <RiArrowDropDownLine className=' text-[30px] hover:text-blue-600' />
-                </>
-                  }
-                  
-              </div>
+                <Dropdown 
+                menu={{
+                  items,
+                }}
+                placement="bottom"
+                >
+                <div className=' flex'>
+                    {
+                      user.role ? 
+                  <div className='items-center flex gap-1 px-1 border py-1 rounded'>
+                    <Avatar size="medium" icon={<UserOutlined />} className={`bg-green-400  text-white`} />
+                    <div className='items-center text-ellipsis line-clamp-1'>{user.firstname}</div>
+                    <RiArrowDropDownLine className=' text-[30px] hover:text-blue-600' />
+                  </div>  : 
+                  <>
+                    <Avatar size="large" icon={<UserOutlined />} />
+                    <RiArrowDropDownLine className=' text-[30px] hover:text-blue-600' />
+                  </>
+                    }
+                    
+                </div>
 
-              </Dropdown>
+                </Dropdown>
             </div>
 
             <div className=' flex h-9 w-10 justify-center items-center'>
                 <Link to={'/cart'}  onClick={()=> window.scrollTo(0,0)} style={{textDecoration: 'none'}} className=' relative w-9 flex-col text-[30px]'>
-                  <Badge count={cart.totalQuantity} showZero size='small'>
-                    <FaOpencart className=' text-[30px]' /> 
-                  </Badge>   
+                    <Badge count={cart.totalQuantity} showZero size='small'>
+                      <FaOpencart className=' text-[30px]' /> 
+                    </Badge>
                 </Link>
             </div>
           </div>
@@ -207,47 +207,45 @@ const Navbar = () => {
               </form>
             </div>
         </div>
-
-   
-          <Drawer
-          title={
-            user.role ? 
-            <div className='flex justify-center items-center gap-2 float-left'>
-            <Avatar size="large" icon={<UserOutlined />} className='bg-green-400 text-white' /> 
-            <div>
-              <p>Welcome, {user.firstname}</p>
+            <Drawer
+            title={
+              user.role ? 
+              <div className='flex justify-center items-center gap-2 float-left'>
+              <Avatar size="large" icon={<UserOutlined />} className='bg-green-400 text-white' /> 
+              <div>
+                <p>Welcome, {user.firstname}</p>
+              </div>
+              </div> : 
+              <div className='flex gap-2 float-left items-center justify-center'>
+                <Avatar size="large" icon={<UserOutlined />} /> 
+                <p>Hello, Sign in</p>
+              </div>
+            }
+            placement={'left'}
+            closable={false}
+            onClose={onClose}
+            open={open}
+            key={'left'}
+            extra={
+              <Space>
+                <Button onClick={onClose}>Cancel</Button>
+              </Space>
+            }
+          >
+            <div className='flex flex-col gap-8 text-[16px]'>
+            <Menu
+              onClick={()=>{onClick(); onClose()}}
+              style={{
+                width: 356,
+                height: 300
+              }}
+              className='text-[20px]'
+              mode="inline"
+              items={menus}
+            />
             </div>
-            </div> : 
-            <div className='flex gap-2 float-left items-center justify-center'>
-              <Avatar size="large" icon={<UserOutlined />} /> 
-              <p>Hello, Sign in</p>
-            </div>
-          }
-          placement={'left'}
-          closable={false}
-          onClose={onClose}
-          open={open}
-          key={'left'}
-          extra={
-            <Space>
-              <Button onClick={onClose}>Cancel</Button>
-            </Space>
-          }
-        >
-          <div className='flex flex-col gap-8 text-[16px]'>
-          <Menu
-            onClick={()=>{onClick(); onClose()}}
-            style={{
-              width: 356,
-              height: 300
-            }}
-            className='text-[20px]'
-            mode="inline"
-            items={menus}
-          />
-          </div>
-          
-        </Drawer>
+            
+          </Drawer>
     </div>
   )
 }

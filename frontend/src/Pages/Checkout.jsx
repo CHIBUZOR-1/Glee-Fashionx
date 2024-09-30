@@ -53,7 +53,7 @@ const Checkout = () => {
     const handlePayment = async(event) => {
         try {
             event.preventDefault();
-            const {nonce} = await instance.requestPaymentMethod();
+            const { nonce } = await instance.requestPaymentMethod();
             
             let orderData = {
                 nonce,

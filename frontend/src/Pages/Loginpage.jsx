@@ -7,9 +7,12 @@ import { toast } from 'react-toastify';
 import {useDispatch} from 'react-redux';
 import {setUser} from '../Store/UserSlice'
 
+import ReactLoading from 'react-loading'
+
 const Loginpage = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const [loading, setLoading] = useState(false);
     
     const [data, setData] = useState({
         email: "",
@@ -25,16 +28,19 @@ const Loginpage = () => {
 
     const handleSubmit = async(e) => {
         e.preventDefault();
+        setLoading(true)
         const response = await axios.post('/api/user/login', data);
         if(response.data.success) {
             toast.success(response.data.message);
             dispatch(setUser(response.data.user));
+            setLoading(false)
             navigate('/');
             
             
         }
         if(!response.data.success) {
             toast.warn(response.data.message);
+            setLoading(false)
         }
     }
 
@@ -52,7 +58,7 @@ const Loginpage = () => {
                             <strong>Email</strong>
                         </label>
                         <br />
-                        <input className=' border px-3 bg-slate-100 rounded-md w-full h-7' name='email' value={data.email} type='email' placeholder='input Email'id='email' onChange={handleChange} />
+                        <input className=' border px-3 bg-slate-100 rounded-md w-full h-7' name='email' value={data.email} type='email' required placeholder='input Email'id='email' onChange={handleChange} />
                     </div>
                     <br />
                     <div className='ms'>
@@ -60,7 +66,7 @@ const Loginpage = () => {
                             <strong>Password</strong>
                         </label>
                         <br />
-                        <input className=' w-full bg-slate-100 border rounded-md px-3 h-7' name='password' value={data.password}type='password' placeholder='input Password'id='password' onChange={handleChange} />
+                        <input className=' w-full bg-slate-100 border rounded-md px-3 h-7' name='password' value={data.password}type='password' required placeholder='input Password'id='password' onChange={handleChange} />
                     </div>
                     <br/>
                     <div>
@@ -68,7 +74,7 @@ const Loginpage = () => {
                     </div>
                     <br />
                     <div>
-                        <button type='submit' className=' bg-slate-600 active:text-black active:bg-blue-300 text-white w-full h-7 rounded-[8px]'>Login</button>
+                        <button type='submit' className=' bg-slate-600 active:text-black active:bg-blue-300 text-white w-full h-7 rounded-[8px]'>{loading ? <div className='w-full   flex items-center justify-center h-full'><ReactLoading type="spin" color='white' height={15} width={15}/></div> : "Login"}</button>
                     </div>
                     <br />
                     <div>

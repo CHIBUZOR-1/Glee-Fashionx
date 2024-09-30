@@ -13,7 +13,7 @@ const Layout = ({children, title, description}) => {
         <meta name="author" content="AMAECHI HENRY CHIBUZOR"/>
         <meta name="description" content={description}/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <meta name="robots" content="index, follow"></meta>
+        <meta name="robots" content="index, follow"/>
         <title>{title}</title>
       </Helmet>
       <ToastContainer className={`max-sm:flex max-sm:justify-center max-sm:text-sm`} />

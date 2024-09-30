@@ -29,7 +29,7 @@ const Search = () => {
       <div>
       {
             Loading ? 
-            <div className='flex items-center justify-center pt-[60px]'>
+            <div className='flex items-center justify-center h-[60vh]'>
              <Loader />
             </div> : 
             <div className='flex flex-col items-center justify-center p-2 mx-auto w-auto'>
