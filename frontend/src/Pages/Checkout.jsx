@@ -97,18 +97,18 @@ const Checkout = () => {
                         <p className='text-[30px] font-semibold'>Summary</p>
                         <div>
                         <div className='summaries'>
-                            <p className='font-medium'>Subtotal</p>
-                            <p>${cart.totalPrice}</p>
+                            <p className='font-medium max-sm:text-sm'>Subtotal</p>
+                            <p className='font-medium max-sm:text-sm'>${cart.totalPrice}</p>
                         </div>
                         <hr/>
                         <div className='summaries'>
-                            <p className='font-medium'>Delivery Fee</p>
-                            <p>${50}</p>
+                            <p className='font-medium max-sm:text-sm'>Delivery Fee</p>
+                            <p className='font-medium max-sm:text-sm'>${50}</p>
                         </div>
                         <hr/>
                         <div className='summaries'>
-                            <p className='font-medium'>Total</p>
-                            <p>${cart.totalPrice + 50}</p>
+                            <p className='font-medium max-sm:text-sm'>Total</p>
+                            <p className='font-medium max-sm:text-sm'>${cart.totalPrice + 50}</p>
                         </div>
                         <hr/>
                         </div>

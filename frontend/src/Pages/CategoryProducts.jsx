@@ -196,12 +196,12 @@ const filterProducts = async() => {
                     <p className='max-sm:hidden'> Results : {data.length === 0? "No Products Found": `(${data.length} products found)`}</p>
                     {
                         loading ? <div className='w-full  flex items-center justify-center h-[70vh]'><ReactLoading type="spin" color='black' height={100} width={50}/></div> : 
-                        <div className='grid w-full grid-cols-4 max-md:grid-cols-3 max-sm:grid-cols-3 mt-2 mb-2 justify-center items-center gap-4'>
+                        <div className='grid w-full grid-cols-3 max-md:grid-cols-3 max-sm:grid-cols-2 mt-2 mb-2 justify-center items-center gap-2'>
                             {
                                     data?.map((p, i)=> {
                                         return(
                                             
-                                                <Link className='flex flex-col border justify-center items-center' key={i} to={`/product/${p._id}`} style={{ textDecoration: 'none', color: 'inherit'}} >
+                                                <Link className='flex w-full flex-col border justify-center items-center' key={i} to={`/product/${p._id}`} style={{ textDecoration: 'none', color: 'inherit'}} >
                                                     <div className='h-60 max-[400px]:h-20 max-sm:h-30'>
                                                         <img className='h-full w-full' src={`/images/${p.images[0].filename}`} alt={p.images[0].filename} />
                                                     </div>

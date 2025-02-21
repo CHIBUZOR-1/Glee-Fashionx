@@ -21,7 +21,7 @@ const NewArrivals = () => {
     <div  className='flex flex-col mt-9 w-auto mb-2 max-sm:mt-10 justify-center items-center'>
       <h2>New Arrivals</h2>
       <hr className=' border w-10 rounded-md border-green-400' />
-      <div className="grid gap-4 grid-cols-4 px-2 mt-3 w-auto">
+      <div className="grid gap-2 grid-cols-4 px-2 mt-3 w-auto">
         {products.map(p => (
           <Link to={`/product/${p._id}`} key={p._id} onClick={()=> window.scrollTo(0,0)} className="flex border rounded-sm items-center justify-center flex-col">
             <div className='h-[300px] max-xl:w-full max-sm:h-auto max-md:h-[200px] max-lg:w-full max-sm:w-full w-[300px]'>

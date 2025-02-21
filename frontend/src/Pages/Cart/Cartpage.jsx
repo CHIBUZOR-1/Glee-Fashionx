@@ -94,22 +94,22 @@ const Cartpage = () => {
                   <h3 className='font-semibold'>Summary</h3>
                   <div>
                     <div className='flex justify-between'>
-                      <p>Subtotal</p>
-                      <p>${cart?.totalPrice}</p>
+                      <p className='font-medium max-sm:text-sm'>Subtotal</p>
+                      <p className='font-medium max-sm:text-sm'>${cart?.totalPrice}</p>
                     </div>
                     <hr/>
                     <div className='flex justify-between'>
-                      <p>Delivery Fee</p>
-                      <p>${!cart?.totalPrice ? 0 : 50}</p>
+                      <p className='font-medium max-sm:text-sm'>Delivery Fee</p>
+                      <p className='font-medium max-sm:text-sm'>${!cart?.totalPrice ? 0 : 50}</p>
                     </div>
                     <hr/>
                     <div className='flex justify-between'>
-                      <p>Total</p>
-                      <p>${cart?.totalPrice + 50}</p>
+                      <p className='font-medium max-sm:text-sm'>Total</p>
+                      <p className='font-medium max-sm:text-sm'>${cart?.totalPrice + 50}</p>
                     </div>
                     <hr/>
                   </div>
-                  <button disabled={!user.email} onClick={()=> navigate("/checkout")} className={`${!user.email? "bg-slate-300" : "bg-slate-600"} cursor-pointer font-semibold py-3 text-white rounded-md w-[max(15vw,200px)]`}>CHECKOUT</button>
+                  <button disabled={!user.email} onClick={()=> navigate("/checkout")} className={`${!user.email? "bg-slate-300" : "bg-slate-600"} cursor-pointer max-sm:text-sm font-semibold py-3 text-white rounded-md w-[max(15vw,200px)]`}>CHECKOUT</button>
                 </div>
                 <div className='flex-[1]'>
                   <div>

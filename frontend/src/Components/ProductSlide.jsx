@@ -47,7 +47,7 @@ const ProductSlide = ({product, firstImg}) => {
                   <Rate className='max-sm:text-[12px]' disabled allowHalf value={product.totalRating}/>
                 </div>
                 <div className='items-center'>
-                  <p onClick={()=> {navigate(`/product_reviews/${product._id}`); window.scrollTo(0,0)}} className='text-[16px] max-sm:text-[12px] text-slate-600 hover:text-red-300'>({product.numReviews} <span>Ratings</span>) </p>
+                  <p onClick={()=> {navigate(`/product_reviews/${product._id}`); window.scrollTo(0,0)}} className='text-[16px] max-sm:text-[12px] cursor-pointer text-slate-600 hover:text-red-300'>({product.numReviews} <span>Ratings</span>) </p>
                 </div>
             </div>
             <div className='flex max-sm:text-[16px] max-md:text-[18px] gap-7 text-[24px]'>
