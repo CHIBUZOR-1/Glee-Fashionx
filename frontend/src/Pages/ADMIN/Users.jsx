@@ -60,39 +60,41 @@ const Users = () => {
 
   
   return (
-    <div className='px-3 gap-1'>
-      <div className='flex items-center flex-col'>
+    <div className='p-1 w-full gap-1 overflow-x-auto scrollbar1'>
+      <div className='flex w-full items-center flex-col'>
         <h1>All Users</h1>
         <hr className='border border-red-400 text-red-300 rounded w-[80px]'/>
       </div>
-      <table className='w-full mt-2 border border-orange-100'>
-        <thead className="bg-slate-100">
-            <tr className='items-center max-sm:text-sm'>
-              <th>Sr</th>
-              <th>Name</th>
-              <th className='max-sm:hidden'>Email</th>
-              <th>Role</th>
-              <th>Created Date</th>
-              <th>Edit</th>
-              <th>Delete</th>
-            </tr>
-          </thead>
-          <tbody>
-          {users.map((item, index) => {
-          return (
-             <tr key={index} className='items-center px-1 max-sm:text-sm gap-2 text-center border border-b-green-600 py-1 h-[12px]'>
-                <td>{index + 1}</td>
-                <td>{item.firstname}</td>
-                <td className='max-sm:hidden'>{item.email}</td>
-                <td>{item.role}</td>
-                <td>{moment(item.createdAt).format('ll')}</td>
-                <td className='py-1'><Button className='bg-blue-500 text-white' onClick={() => {setVisible(true); setNewRole(item.role); setUser(item)}}><MdEdit /></Button></td>
-                <td className='py-1'><Button  onClick={() => {setVisible1(true); setUser(item)}} className='bg-blue-500 text-white hover:bg-red-500'><MdDelete /></Button></td>
-             </tr>
-            )
-          })}
-        </tbody>
-      </table>
+      <div className='w-full'>
+        <table className='w-full max-md:w-[750px] mt-2 border border-orange-100'>
+          <thead className="bg-slate-100">
+              <tr className='items-center max-sm:text-sm'>
+                <th>Sr</th>
+                <th>Name</th>
+                <th className='max-sm:hidden'>Email</th>
+                <th>Role</th>
+                <th>Created Date</th>
+                <th>Edit</th>
+                <th>Delete</th>
+              </tr>
+            </thead>
+            <tbody>
+            {users.map((item, index) => {
+            return (
+              <tr key={index} className='items-center px-1 max-sm:text-sm gap-2 text-center border border-b-green-600 py-1 h-[12px]'>
+                  <td>{index + 1}</td>
+                  <td>{item.firstname}</td>
+                  <td className='max-sm:hidden'>{item.email}</td>
+                  <td>{item.role}</td>
+                  <td>{moment(item.createdAt).format('ll')}</td>
+                  <td className='py-1'><Button className='bg-blue-500 text-white' onClick={() => {setVisible(true); setNewRole(item.role); setUser(item)}}><MdEdit /></Button></td>
+                  <td className='py-1'><Button  onClick={() => {setVisible1(true); setUser(item)}} className='bg-blue-500 text-white hover:bg-red-500'><MdDelete /></Button></td>
+              </tr>
+              )
+            })}
+          </tbody>
+        </table>
+      </div>
       <Modal title='Update User Role' onCancel={()=> setVisible(false)} open={Visible} footer={null}>
         <EditUser handleUpdate={handleSubmit} value={newRole} setValue={setNewRole} />
       </Modal>

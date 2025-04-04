@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Layout from '../Components/Layout'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { assets } from '../Components/Assets/Assets';
 import axios from 'axios';
 import { toast } from 'react-toastify';
@@ -12,6 +12,8 @@ import ReactLoading from 'react-loading'
 const Loginpage = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const location = useLocation();
+    console.log(location);
     const [loading, setLoading] = useState(false);
     
     const [data, setData] = useState({
@@ -34,7 +36,7 @@ const Loginpage = () => {
             toast.success(response.data.message);
             dispatch(setUser(response.data.user));
             setLoading(false)
-            navigate('/');
+            navigate(location.state || '/');
             
             
         }
@@ -70,7 +72,7 @@ const Loginpage = () => {
                     </div>
                     <br/>
                     <div>
-                        <Link to={'/forgot-password'}  onClick={()=> window.scrollTo(0,0)} className=' text-blue-500 active:text-red-400'><p>Forgot Password?</p></Link>
+                        <Link to={'/forgot-password'}  className=' text-blue-500 active:text-red-400'><p>Forgot Password?</p></Link>
                     </div>
                     <br />
                     <div>
@@ -78,7 +80,7 @@ const Loginpage = () => {
                     </div>
                     <br />
                     <div>
-                        <p>Don't have an account? <span><Link to='/register'  onClick={()=> window.scrollTo(0,0)} className=' text-blue-500'>Register</Link></span></p>
+                        <p>Don't have an account? <span><Link to='/register'  className=' text-blue-500'>Register</Link></span></p>
                     </div>
                 </form>
                 

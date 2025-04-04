@@ -20,17 +20,21 @@ import ResetPassword from './Pages/ResetPassword';
 import VerifyEmail from './Pages/VerifyEmail';
 import PrivateRoute1 from './Components/PrivateRoute1';
 import UserDashboard from './Pages/USER-DASHBOARD/UserDashboard';
+import TopScroll from './Components/TopScroll';
+import { ToastContainer } from 'react-toastify';
 
 function App() {
 
   return (
     <>
+    <ToastContainer className={`max-sm:flex max-sm:justify-center max-sm:text-sm`} />
+    <TopScroll />
     <Routes>
       <Route path='/' element={<Homepage/>}/>
       <Route path='/cart' element={<Cartpage/>}/>
       <Route path='/login' element={<Loginpage/>} />
       <Route path='/checkout' element={<Checkout/>}/>
-      <Route path='/Search' element={<Search/>} />
+      <Route path='/search' element={<Search/>} />
       <Route path='/About' element={<AboutPage/>} />
       <Route path='/new-user' element={<RegistrationNote/>}/>
       <Route path='/product_reviews/:id' element={<ProductRviews/>} />
@@ -38,7 +42,7 @@ function App() {
       <Route path='/reset-password/:token' element={<ResetPassword/>}/>
       <Route path='/verify-email/:token' element={<VerifyEmail/>}/>
       <Route path='/user-profile' element={<Profile/>} />
-      <Route path='/product_category/:category' element={<CategoryProducts/>} />
+      <Route path='/product_category' element={<CategoryProducts/>} />
       <Route path='/product/:id' element={<Productpage/>}/>
       <Route path='*' element={<PageNotFound/>}/>
       <Route path='/register'element={<Registerpage/>} />

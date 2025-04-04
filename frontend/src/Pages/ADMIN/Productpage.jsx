@@ -32,7 +32,7 @@ const Productpagez = () => {
     const list = await prodList();
     if(list.success) {
       setLoading(false)
-      setAllProducts(list.data);
+      setAllProducts(list.products);
       toast.success(list.message)
     } else {
       toast.error('Error');
@@ -63,23 +63,23 @@ const Productpagez = () => {
   }
 
   return (
-    <div className=' flex flex-col border-b-green-100 shadow-sm'>
+    <div className=' flex flex-col pb-1 min-h-screen border-b-green-100 shadow-sm'>
         <div className='flex justify-between h-6 px-4 py-3 items-center'>
             <p className=' rounded-md bg-slate-400 px-3 text-white text-[18px] font-semibold'>All products</p>
             <button onClick={()=>  setVisible(true)} className='font-semibold bg-slate-500 px-3 rounded-md text-[18px] text-white' >Add Product</button>
         </div>
-        <div className='h-[100vh] mt-3 overflow-y-scroll scrollbar'>
+        <div className='mt-3 '>
           {
             loading ? 
             <div className='flex items-center justify-center pt-[60px]'>
              <Loader />
             </div> : 
-            <div className='mt-2 max-[920px]:grid-cols-5 max-md:grid-cols-4 max-sm:grid-cols-3 max-sm:gap-6 max-[500px]:grid-cols-2  grid grid-cols-6 gap-5 items-center rounded pl-3  sm:flex-auto'>
+            <div className='mt-2  max-md:grid-cols-3 max-sm:grid-cols-2 max-sm:gap-1   grid grid-cols-4 gap-2 items-center rounded  sm:flex-auto'>
               {
                 allProductz.map((p, i)=> {
                   return(
-                    <div key={i + 1} className=' bg-white rounded border-gray-200 border p-[2px] w-[120px] flex justify-center flex-col items-center'>
-                      <img src={`/images/${p.images[0].filename}`} alt=""  className='h-[100px] w-full'/>
+                    <div key={i + 1} className=' bg-white rounded border-gray-200 border p-[2px] w-full flex justify-center flex-col items-center'>
+                      <img src={`/images/${p.images[0].filename}`} alt=""  className='h-[200px] max-sm:object-contain w-full'/>
                       <h1 className='font-bold  text-ellipsis line-clamp-1 capitalize text-[12px]'>{p.brand_name.toUpperCase()}</h1>
                       <h1 className='text-ellipsis max-sm:text-[10px] line-clamp-1'>{p.product_name}</h1>
                       <div className='flex justify-between h-8 items-center gap-2 w-full'>

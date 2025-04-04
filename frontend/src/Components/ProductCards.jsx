@@ -45,7 +45,7 @@ const ProductCards = () => {
           </div>
         </div>
         
-        <div className='border rounded items-center my-auto h-full border-slate-400 flex'>
+        <div className='border border-slate-300 rounded items-center my-auto h-full flex'>
             <div className='h-full max-md:hidden w-[26%] max-md:h-auto max-sm:hidden'>
                 {dept === "Men" && <img src={assets.men_category_banner} className='h-full w-full my-auto mx-auto' alt="men12" /> }
                 {dept === "Women" && <img src={assets.category_banner} className=' h-full max-lg:h-full max-lg:w-full w-full mx-auto' alt="men12" />}
@@ -63,7 +63,7 @@ const ProductCards = () => {
                     {
                        data?.map((p, i)=> {
                             return(
-                                <Link key={i} to={`/product/${p._id}`} className='border max-sm:pt-1 hover:border-green-300 flex flex-col justify-center items-center max-[500px]:pt-1 xl:pb-2 h-full' style={{ textDecoration: 'none', color: 'inherit'}} >
+                                <Link key={i} to={`/product/${p._id}`} className=' max-sm:pt-1 border border-slate-200 shadow-lg flex flex-col justify-center items-center max-[500px]:pt-1 xl:pb-2 h-full' style={{ textDecoration: 'none', color: 'inherit'}} >
                                     <div className='h-[190px] max-xl:w-[200px] max-sm:h-[130px] max-md:h-[180px] max-lg:w-[200px] max-sm:w-[130px] w-[200px]'>
                                         <img className='h-full w-full' src={`/images/${p.images[0].filename}`} alt="" /> 
                                     </div>

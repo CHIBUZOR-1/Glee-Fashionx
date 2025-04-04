@@ -1,6 +1,5 @@
 import React from 'react'
 import Navbar from './Navbar/Navbar'
-import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Footer from './Footer';
 import Helmet from 'react-helmet'
@@ -16,7 +15,6 @@ const Layout = ({children, title, description}) => {
         <meta name="robots" content="index, follow"/>
         <title>{title}</title>
       </Helmet>
-      <ToastContainer className={`max-sm:flex max-sm:justify-center max-sm:text-sm`} />
       <Navbar/>
       <main className='pt-[80px] min-h-[90vh] max-[850px]:pt-[110px]'>
         {children}

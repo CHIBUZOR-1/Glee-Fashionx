@@ -2,18 +2,22 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { BsBoxSeamFill } from "react-icons/bs";
 import { toast } from 'react-toastify';
+import ReactLoading from 'react-loading'
 
 const Orderz = () => {
   const [orders, setOrders] = useState([]);
+  const [ld, setLd] = useState(false);
 
   useEffect(()=> {
     getAllOrders();
   }, []);
 
   const getAllOrders = async() => {
+    setLd(true);
     const res = await axios.get('/api/orders/all_orders');
     if(res.data.success) {
       setOrders(res.data.data);
+      setLd(false);
     } else {
       toast.error("Error Occurred!")
     }
@@ -30,8 +34,20 @@ const Orderz = () => {
     <div className='mx-0 flex-col flex gap-2 px-4'>
     <h2 className='text-[18px]  text-white'><div className='bg-slate-500 px-2 rounded-sm inline-block'>Orders</div></h2>
     <div className='flex flex-col gap-2 mb-2 '>
+      {
+        ld && orders.length === 0 && (
+          <div className='w-full h-full flex items-center justify-center'>
+            <ReactLoading type="spin" color='black' height={40} width={40}/>
+          </div>
+        )
+      }
+      {
+        orders.length === 0 && !ld && (
+          <div className='flex text-center items-center text-[60px] pt-5 text-slate-200'>No Orders Found</div>
+        )
+      }
     {
-      orders.length === 0? <div className='flex text-center items-center text-[60px] pt-5 text-slate-200'>No Orders Found</div> :
+      orders.length > 0 && (
         orders.map((o, i)=>{
           return(
             <div key={i} className='grid xl:grid-cols-5 max-md:w-full items-center p-2  gap-2 border rounded border-slate-200'>
@@ -67,6 +83,8 @@ const Orderz = () => {
             </div>
           )
         })
+      )
+        
       }
     </div>
   </div>

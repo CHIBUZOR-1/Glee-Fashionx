@@ -32,11 +32,31 @@ app.use(express.urlencoded({ extended: true}));
 app.use(cookieParser());
 
 // Add CSP middleware here
+
 app.use((req, res, next) => {
-    const nonce = crypto.randomBytes(16).toString('base64');
-    res.setHeader("Content-Security-Policy", `default-src 'self'; connect-src 'self' https://api.sandbox.braintreegateway.com https://payments.sandbox.braintree-api.com https://origin-analytics-sand.sandbox.braintree-api.com; frame-src 'self' https://assets.braintreegateway.com; style-src 'self' 'unsafe-inline' https://assets.braintreegateway.com; style-src-elem 'self' 'unsafe-inline' https://assets.braintreegateway.com`);
-    res.locals.nonce = nonce; // Make nonce available to your templates
+    res.locals.nonce = crypto.randomBytes(16).toString('base64'); // Generate nonce
     next();
+});
+
+
+app.use((req, res, next) => {
+    helmet({
+        contentSecurityPolicy: {
+            directives: {
+                defaultSrc: ["'self'"],
+                scriptSrc: ["'self'", "https://embed.tawk.to", "https://cdn.jsdelivr.net",   "https://www.gstatic.com", "https://www.googleapis.com", "https://apis.google.com"],
+                styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com", "*.tawk.to", "https://assets.braintreegateway.com"],
+                imgSrc: ["'self'", "data:", "https://www.gstatic.com", "blob:", "https://as2.ftcdn.net", "https://res.cloudinary.com", "https://cdn.jsdelivr.net", "*.tawk.to"],
+                connectSrc: ["'self'", "https://www.googleapis.com", "https://origin-analytics-sand.sandbox.braintree-api.com", "https://assets.braintreegateway.com", "https://firebasestorage.googleapis.com", "https://payments.sandbox.braintree-api.com", "https://api.sandbox.braintreegateway.com", "https://identitytoolkit.googleapis.com", "blob:", "https://res.cloudinary.com", "*.tawk.to", "wss://*.tawk.to" ],
+                fontSrc: ["'self'", "https://fonts.gstatic.com", "*.tawk.to"],
+                objectSrc: ["'none'"],
+                mediaSrc: ["'self'", "blob:", "https://res.cloudinary.com", "*.tawk.to"],
+                frameSrc: ["'self'", "https://accounts.google.com", "*.tawk.to", "https://assets.braintreegateway.com"],
+                baseUri: ["'self'"],
+                formAction: ["'self'"],
+            }
+        }
+    })(req, res, next);
 });
 
 

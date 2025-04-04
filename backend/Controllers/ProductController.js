@@ -1,9 +1,5 @@
 const productModel = require('../Models/ProductModel');
-const fs = require('fs');
-const path = require('path');
-const { title } = require('process');
 const userModel = require('../Models/UserModel');
-const { ObjectId } = require('mongoose').Types;
 
 const addProduct = async (req, res) => {
     try {
@@ -58,13 +54,50 @@ const addProduct = async (req, res) => {
     }
 }
 
+
+
 const productList = async (req, res) => {
     try {
-        const products = await productModel.find({}).sort({createdAt: -1});
+        const startIndex = parseInt(req.query.startIndex) || 0;
+        const limit = parseInt(req.query.limit) || 9;
+        const sortOrder = req.query.sort === 'asc' ? 1 : -1;
+        const query= {};
+        if (req.query.src) {
+            query.$or = [
+                {category: {$regex: req.query.src, $options: "i"}},
+                {sub_category: {$regex: req.query.src, $options: "i"}},
+                {product_name: {$regex: req.query.src, $options: "i"}}
+            ];
+        }
+        // Price filter
+        if (req.query.price && req.query.price.length) {
+            const [minPrice, maxPrice] = req.query.price.split('-').map(Number);
+            console.log([minPrice, maxPrice])
+            query.new_price = {$gte: minPrice, $lte: maxPrice};
+        }
+
+        // Handle checkbox filters (brand_name)
+        if (req.query.brand && req.query.brand.length > 0) {
+            query.brand_name = { $in: req.query.brand.split('--') };
+        }
+        const products = await productModel.find(query).sort({createdAt: sortOrder}).skip(startIndex).limit(limit);
+        const totalProducts = await productModel.countDocuments(query);
+        const now = new Date();
+        const oneMonthAgo= new Date(
+            now.getFullYear(),
+            now.getMonth() - 1,
+            now.getDate()
+        );
+        const lastMonthProducts = await productModel.countDocuments({
+            ...query,
+            createdAt: { $gte: oneMonthAgo },
+        });
         res.json({
             success: true,
             message: "Retrieved Product List",
-            data: products
+            products,
+            totalProducts,
+            lastMonthProducts
         })
     } catch (error) {
         console.log(error);
@@ -214,37 +247,35 @@ const getProductDetails = async(req, res)=> {
     }
 }
 
-const c_and_p_filter = async(req, res) => {
-    try {
-        const {checked, radio, que} = req.body;
-        let args = {};
-        if(que)  args.sub_category = que;
-        if(checked.length > 0) args.brand_name = checked;
-        if(radio.length) args.new_price = {$gte: radio[0], $lte: radio[1]}
-        const products = await productModel.find(args);
-        res.status(200).send({
-            success: true,
-            data: products
-        })
-    } catch (error) {
-        console.log(error);
-        res.json({
-            success: false,
-            error: true,
-            message: "Error filtering products"
-        })
-    }
-}
+
 
 const cateProducts = async (req, res) => {
     try {
-        const { que } = req.body;
-        const result = await productModel.find({sub_category: que});
+        const { que, price, brand } = req.query;
+        const startIndex = parseInt(req.query.startIndex) || 0;
+        const limit = parseInt(req.query.limit) || 6;
+
+        // Initialize query to filter by sub_category
+        const query = { sub_category: que };
+
+        // Handle price filter
+        if (price && price.length) {
+            const [minPrice, maxPrice] = price.split('-').map(Number);
+            query.new_price = { $gte: minPrice, $lte: maxPrice };
+        }
+
+        // Handle brand filter
+        if (brand && brand.length > 0) {
+            query.brand_name = { $in: brand.split('--') };
+        }
+
+        // Fetch filtered products
+        const result = await productModel.find(query).skip(startIndex).limit(limit);
         res.json({
-            data: result,
-            success:true,
-            error: true
-        }); 
+            result,
+            success: true,
+            error: false, // Correcting the `error` flag
+        });
     } catch (error) {
         console.log(error);
         res.json({
@@ -252,7 +283,7 @@ const cateProducts = async (req, res) => {
             error: true
         });
     }
-}
+};
 
 const newArrivals = async (req, res) => {
     try {
@@ -263,52 +294,7 @@ const newArrivals = async (req, res) => {
     }
 }
 
-const searchProducts = async (req, res) => {
-    try {
-        const { keyword } = req.query;
-        const result = await productModel.find({
-            $or: [
-                {brand_name: {$regex : keyword, $options: "i"}},
-                {category: {$regex: keyword, $options: "i"}},
-                {sub_category: {$regex: keyword, $options: "i"}},
-                {product_name: {$regex: keyword, $options: "i"}}
-            ]
-        });
 
-        res.json({
-            data: result,
-            success:true,
-            error: true
-        })
-    } catch (error) {
-        console.log(error);
-        res.json({
-            success: false,
-            error: true
-        })
-    }
-}
-
-const filterProducts = async(req, res) => {
-    try {
-        const {checked, radio} = req.body;
-        let args = {};
-        if(checked.length > 0) args.brand_name = checked;
-        if(radio.length) args.new_price = {$gte: radio[0], $lte: radio[1]}
-        const products = await productModel.find(args);
-        res.status(200).send({
-            success: true,
-            data: products
-        })
-    } catch (error) {
-        console.log(error);
-        res.json({
-            success: false,
-            error: true,
-            message: "Error filtering products"
-        })
-    }
-}
 
 const reviews = async(req, res) => {
     try {
@@ -386,4 +372,4 @@ const getReviews = async (req, res) => {
   };
 
 
- module.exports = {addProduct, relatedProducts, newArrivals, getReviews, reviews, c_and_p_filter, productList, filterProducts, cateProducts, removeProduct, getProductDetails, updateProduct, cardsByCartegory, getProductCategories, searchProducts};
+ module.exports = {addProduct, relatedProducts, newArrivals, getReviews, reviews, productList, cateProducts, removeProduct, getProductDetails, updateProduct, cardsByCartegory, getProductCategories};

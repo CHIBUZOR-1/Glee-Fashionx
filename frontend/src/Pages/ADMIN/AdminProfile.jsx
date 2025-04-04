@@ -6,8 +6,8 @@ const AdminProfile = () => {
   
   const handleChange = () => {}
   return (
-    <div className=' h-[100vh] items-center justify-center flex'>
-      <div className='bg- rounded border h-[50vh] w-[450px] p-1 px-2'>
+    <div className=' h-[100vh] p-3 flex'>
+      <div className='bg- rounded border h-[50vh] w-full p-1 px-2'>
         <h1 className=' font-bold flex text-[24px] justify-center'>Profile</h1>
         <form className='flex flex-col gap-3' >
           <input type="text" value={user.firstname} onChange={handleChange} className='border px-2 text-[16px] font-bold rounded' />

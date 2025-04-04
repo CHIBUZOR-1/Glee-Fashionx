@@ -3,7 +3,7 @@ const productRouter = express.Router();
 const dotenv = require("dotenv").config();
 const multer = require('multer');
 const { verifyToken, isAdmin } = require('../Utilities/Auth');
-const { addProduct, productList, removeProduct, getProductCategories, cardsByCartegory, getProductDetails, updateProduct, cateProducts, filterProducts, c_and_p_filter, searchProducts, newArrivals, reviews, getReviews, relatedProducts } = require('../Controllers/ProductController');
+const { addProduct, productList, removeProduct, getProductCategories, cardsByCartegory, getProductDetails, updateProduct, cateProducts,  newArrivals, reviews, getReviews, relatedProducts } = require('../Controllers/ProductController');
 
 
 
@@ -25,10 +25,7 @@ productRouter.put('/update_product/:id', verifyToken, isAdmin, updateProduct);
 productRouter.get('/categories', getProductCategories);
 productRouter.post('/product_details', getProductDetails);
 productRouter.post('/card_categories', cardsByCartegory);
-productRouter.post('/category_products', cateProducts);
-productRouter.post('/filter-products', filterProducts);
-productRouter.post('/filter_categories', c_and_p_filter);
-productRouter.get('/search', searchProducts);
+productRouter.get('/category_products', cateProducts);
 productRouter.get('/new-arrivals', newArrivals);
 productRouter.put('/add_review/:id', verifyToken, reviews);
 productRouter.get('/get_reviews/:id', getReviews);

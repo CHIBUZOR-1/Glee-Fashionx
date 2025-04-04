@@ -1,6 +1,6 @@
 import React from 'react'
 import Layout from '../../Components/Layout'
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { AiTwotoneDelete } from 'react-icons/ai';
@@ -9,8 +9,19 @@ import { clearCart, removeFromCart } from '../../Store/CartSlice';
 const Cartpage = () => {
   const cart = useSelector(state => state.cart);
   const user = useSelector(state => state.user);
+  const location = useLocation()
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const checkUp = ()=> {
+    if(!user.email) {
+      navigate('/login', {
+        state: location.pathname
+      })
+    } else {
+      navigate("/checkout")
+    }
+    
+  }
   return (
     <Layout title={"Glee Shopping Cart"}>
         <div className='px-7 mx-auto mb-2'>
@@ -109,7 +120,7 @@ const Cartpage = () => {
                     </div>
                     <hr/>
                   </div>
-                  <button disabled={!user.email} onClick={()=> navigate("/checkout")} className={`${!user.email? "bg-slate-300" : "bg-slate-600"} cursor-pointer max-sm:text-sm font-semibold py-3 text-white rounded-md w-[max(15vw,200px)]`}>CHECKOUT</button>
+                  <button onClick={checkUp} className={` bg-slate-800 cursor-pointer max-sm:text-sm font-semibold py-3 text-white rounded-md w-[max(15vw,200px)]`}>CHECKOUT</button>
                 </div>
                 <div className='flex-[1]'>
                   <div>
