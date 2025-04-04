@@ -1,7 +1,6 @@
 const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
-const bcrypt = require('bcryptjs');
 const dotenv = require('dotenv');
 const helmet = require('helmet');
 const bodyParser = require('body-parser');
@@ -84,7 +83,7 @@ app.get('/', (req, res) => {
 
 
  app.listen(PORT, () => {
-    console.log(`Server listening at http://localhost:${PORT}`);
+    console.log(`Server listening @ http://localhost:${PORT}`);
 });
 
 
